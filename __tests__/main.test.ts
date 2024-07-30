@@ -151,6 +151,7 @@ test('Download all files from public repo', async () => {
     fileName: '*',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -168,6 +169,7 @@ test('Download single file from public repo', async () => {
     fileName: 'test-1.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -185,6 +187,7 @@ test('Fail loudly if given filename is not found in a release', async () => {
     fileName: 'missing-file.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -204,6 +207,7 @@ test('Fail loudly if release is not identified', async () => {
     fileName: 'missing-file.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -223,6 +227,7 @@ test('Download files with wildcard from public repo', async () => {
     fileName: 'test-*.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -240,6 +245,7 @@ test('Download single file with wildcard from public repo', async () => {
     fileName: '3-*.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -257,6 +263,7 @@ test('Download multiple pdf files with wildcard filename', async () => {
     fileName: '*.pdf',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -274,6 +281,7 @@ test('Download a csv file with wildcard filename', async () => {
     fileName: '*.csv',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -293,6 +301,7 @@ test('Download file from Github Enterprise server', async () => {
     fileName: 'test-1.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -310,6 +319,7 @@ test('Download file from release identified by ID', async () => {
     fileName: 'test-2.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -327,6 +337,7 @@ test('Download all archive files from public repo', async () => {
     fileName: '*.zip',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: true,
     outFilePath: outputFilePath
   }
@@ -366,6 +377,7 @@ test('Fail when a release with no assets are obtained', async () => {
     fileName: 'installer.zip',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -385,6 +397,7 @@ test('Download from latest prerelease', async () => {
     fileName: 'pre-release.txt',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -402,6 +415,7 @@ test('Fail when a release with no prerelease is obtained', async () => {
     fileName: 'installer.zip',
     tarBall: false,
     zipBall: false,
+    publishedReleaseInfo: false,
     extractAssets: false,
     outFilePath: outputFilePath
   }
@@ -419,6 +433,7 @@ test('Download from a release containing only tarBall & zipBall', async () => {
     fileName: '',
     tarBall: true,
     zipBall: true,
+    publishedReleaseInfo: true,
     extractAssets: false,
     outFilePath: outputFilePath
   }
