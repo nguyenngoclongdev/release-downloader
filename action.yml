@@ -36,6 +36,10 @@ inputs:
     description: 'Download zipball from assets'
     default: 'false'
     required: false
+  publishedReleaseInfo:
+    description: 'Download published release information'
+    default: 'false'
+    required: false
   out-file-path:
     description:
       'Relative path under $GITHUB_WORKSPACE to place the downloaded files'

@@ -10,6 +10,11 @@ import { IHeaders, IHttpClientResponse } from 'typed-rest-client/Interfaces'
 
 import { IReleaseDownloadSettings } from './download-settings'
 
+interface ReleaseResponse {
+  content: string;
+  release: GithubRelease;
+}
+
 export class ReleaseDownloader {
   private httpClient: thc.HttpClient
 
@@ -23,20 +28,19 @@ export class ReleaseDownloader {
   async download(
     downloadSettings: IReleaseDownloadSettings
   ): Promise<string[]> {
-    let ghRelease: GithubRelease
-
+    let response: ReleaseResponse;
     if (downloadSettings.isLatest) {
-      ghRelease = await this.getlatestRelease(
+      response = await this.getlatestRelease(
         downloadSettings.sourceRepoPath,
         downloadSettings.preRelease
       )
     } else if (downloadSettings.tag !== '') {
-      ghRelease = await this.getReleaseByTag(
+      response = await this.getReleaseByTag(
         downloadSettings.sourceRepoPath,
         downloadSettings.tag
       )
     } else if (downloadSettings.id !== '') {
-      ghRelease = await this.getReleaseById(
+      response = await this.getReleaseById(
         downloadSettings.sourceRepoPath,
         downloadSettings.id
       )
@@ -44,6 +48,11 @@ export class ReleaseDownloader {
       throw new Error(
         'Config error: Please input a valid tag or release ID, or specify `latest`'
       )
+    }
+
+    const {content, release: ghRelease } = response
+    if (downloadSettings.publishedReleaseInfo) {
+      await this.saveJsonFile(downloadSettings.outFilePath, "releases.json", content)
     }
 
     const resolvedAssets: DownloadMetaData[] = this.resolveAssets(
@@ -71,7 +80,7 @@ export class ReleaseDownloader {
   private async getlatestRelease(
     repoPath: string,
     preRelease: boolean
-  ): Promise<GithubRelease> {
+  ): Promise<ReleaseResponse> {
     core.info(`Fetching latest release for repo ${repoPath}`)
 
     const headers: IHeaders = { Accept: 'application/vnd.github.v3+json' }
@@ -116,7 +125,7 @@ export class ReleaseDownloader {
       }
     }
 
-    return release
+    return {release, content: responseBody}
   }
 
   /**
@@ -127,7 +136,7 @@ export class ReleaseDownloader {
   private async getReleaseByTag(
     repoPath: string,
     tag: string
-  ): Promise<GithubRelease> {
+  ): Promise<ReleaseResponse> {
     core.info(`Fetching release ${tag} from repo ${repoPath}`)
 
     if (tag === '') {
@@ -152,7 +161,7 @@ export class ReleaseDownloader {
     const release: GithubRelease = JSON.parse(responseBody.toString())
     core.info(`Found release tag: ${release.tag_name}`)
 
-    return release
+    return {release, content: responseBody}
   }
 
   /**
@@ -163,7 +172,7 @@ export class ReleaseDownloader {
   private async getReleaseById(
     repoPath: string,
     id: string
-  ): Promise<GithubRelease> {
+  ): Promise<ReleaseResponse> {
     core.info(`Fetching release id:${id} from repo ${repoPath}`)
 
     if (id === '') {
@@ -188,7 +197,7 @@ export class ReleaseDownloader {
     const release: GithubRelease = JSON.parse(responseBody.toString())
     core.info(`Found release tag: ${release.tag_name}`)
 
-    return release
+    return {release, content: responseBody}
   }
 
   private resolveAssets(
@@ -310,5 +319,19 @@ export class ReleaseDownloader {
         resolve(outFilePath)
       })
     })
+  }
+
+  private async saveJsonFile(
+    outputPath: string,
+    fileName: string,
+    content: string
+  ): Promise<string> {
+    const outFilePath: string = path.resolve(outputPath, fileName)
+    return new Promise(function(resolve, reject) {
+      fs.writeFile(outputPath, content, function(err) {
+          if (err) reject(err);
+          else resolve(outFilePath);
+      });
+    });
   }
 }

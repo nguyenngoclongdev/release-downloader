@@ -49,6 +49,7 @@ export function getInputs(): IReleaseDownloadSettings {
     fileName: core.getInput('fileName'),
     tarBall: core.getBooleanInput('tarBall'),
     zipBall: core.getBooleanInput('zipBall'),
+    publishedReleaseInfo: core.getBooleanInput('publishedReleaseInfo'),
     extractAssets: core.getBooleanInput('extract'),
     outFilePath: path.resolve(
       githubWorkspacePath,

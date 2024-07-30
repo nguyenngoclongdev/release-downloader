@@ -40,6 +40,11 @@ export interface IReleaseDownloadSettings {
   zipBall: boolean
 
   /**
+   * Download published release information
+   */
+  publishedReleaseInfo: boolean
+
+  /**
    * Target path to download the file
    */
   outFilePath: string

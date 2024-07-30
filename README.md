@@ -41,6 +41,9 @@ specified files from both private and public repositories.
     # Download the attached zipball (*.zip)
     zipBall: true
 
+    # Download the published release info (*.json)
+    publishedReleaseInfo: true
+
     # Relative path under $GITHUB_WORKSPACE to place the downloaded file(s)
     # It will create the target directory automatically if not present
     # eg: out-file-path: "my-downloads" => It will create directory $GITHUB_WORKSPACE/my-downloads
@@ -109,7 +112,7 @@ ${{steps.<step-id>.outputs.tag_name}}
     fileName: 'foo.zip'
 ```
 
-### Download tarball and zipball
+### Download tarball, zipball and published release information
 
 ```yaml
 - uses: robinraju/release-downloader@v1
@@ -118,6 +121,7 @@ ${{steps.<step-id>.outputs.tag_name}}
     latest: true
     tarBall: true
     zipBall: true
+    publishedReleaseInfo: true
 ```
 
 > Remove the `latest` flag and specify `tag` if you want to download from a
@@ -133,6 +137,7 @@ ${{steps.<step-id>.outputs.tag_name}}
     fileName: 'foo.zip'
     tarBall: true
     zipBall: true
+    publishedReleaseInfo: true
 ```
 
 ### Download all assets if more than one files are available
