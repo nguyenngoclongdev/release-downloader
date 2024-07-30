@@ -1,7 +1,7 @@
-name: 'release-downloader'
+name: 'gh-release-downloader'
 description:
   'Download release assets from private or public github repositories'
-author: 'Robin Raju'
+author: 'Nguyen Ngoc Long'
 inputs:
   repository:
     description: 'The source repository path. Expected format {owner}/{repo}'
